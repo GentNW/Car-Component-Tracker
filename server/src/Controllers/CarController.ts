@@ -11,8 +11,12 @@ export const createCar = async (req:Request,res:Response) =>{
             [OwnerID,CarModel,Mileage]
         )
         res.status(201).json(result.rows[0])
-    } catch(err){
-        res.status(500).json({ error:err.message})
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }
 
@@ -23,8 +27,12 @@ export const getCars = async (req:Request,res:Response) =>{
             'SELECT * FROM Car'
         )
         res.status(200).json(result.rows)
-    } catch(err){
-        res.status(500).json({error:err.message})
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }
 
@@ -42,8 +50,12 @@ export const updateCar = async (req:Request,res:Response) =>{
             return res.status(404).json({ message: 'Component not found' });
           }
         res.status(201).json(result.rows[0])
-    } catch(err){
-        res.status(500).json({ error:err.message})
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }
 
@@ -59,7 +71,11 @@ export const deleteCar = async (req:Request, res:Response) =>{
             return res.status(404).json({ message: 'Car not found' });
             }
         res.status(200).json(result.rows[0]);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }

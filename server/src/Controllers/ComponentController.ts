@@ -11,8 +11,12 @@ export const createComponent = async (req:Request,res:Response) =>{
             [CarID,ComponentName,ChangeDate,MileageOnChange,CurrentMileage]
         )
         res.status(201).json(result.rows[0])
-    } catch(err){
-        res.status(500).json({ error:err.message})
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }
 
@@ -23,11 +27,14 @@ export const getComponents = async (req:Request,res:Response) =>{
             'SELECT * FROM Component'
         )
         res.status(200).json(result.rows)
-    } catch(err){
-        res.status(500).json({error:err.message})
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }
-
 //Update
 export const updateComponent = async (req:Request,res:Response) =>{
     const {ID} = req.params
@@ -42,8 +49,12 @@ export const updateComponent = async (req:Request,res:Response) =>{
             return res.status(404).json({ message: 'Component not found' });
           }
         res.status(201).json(result.rows[0])
-    } catch(err){
-        res.status(500).json({ error:err.message})
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }
 
@@ -59,7 +70,11 @@ export const deleteComponent = async (req:Request, res:Response) =>{
             return res.status(404).json({ message: 'Component not found' });
             }
         res.status(200).json(result.rows[0]);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
     }
 }
