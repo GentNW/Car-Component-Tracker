@@ -36,3 +36,24 @@
     transform: rotate(360deg);
   }
 }
+
+.img-flag{
+  width:64px;
+  height:64px;
+}
+.optgroup-image{
+  width:64px;
+  height:64px;  
+}
+
+/*Component name*/
+.select2-container .select2-results__option {
+  padding: 5px; 
+  color: black;
+  background-color: rgb(190, 190, 190);
+}
+
+.select2-results__option--highlighted:hover {
+  color: rgb(255, 255, 255);
+  transition: color 0.3s ease
+}
