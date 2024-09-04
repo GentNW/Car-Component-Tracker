@@ -46,14 +46,78 @@
   height:64px;  
 }
 
-/*Component name*/
-.select2-container .select2-results__option {
-  padding: 5px; 
-  color: black;
+/* New Component select*/
+
+.Group-title{
+  border: #61dafb;
+  color:blue;
+}
+
+.select2-container  {
+  max-height: 50%;
+  
+  overflow-y: scroll;
+  overflow-x:hidden;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: black; 
+  background-color: rgb(190, 190, 190);
+
+  cursor: pointer;
+  padding: 10px;
+  
+}
+
+.select2-container--focus{
+
+}
+.select2-container:hover{
+  color: rgb(255, 255, 255);
+  
+  transition: color 0.3s ease
+}
+
+.select2-results__option{
+  
+  color:black;
+  
+  
   background-color: rgb(190, 190, 190);
 }
 
 .select2-results__option--highlighted:hover {
   color: rgb(255, 255, 255);
+
   transition: color 0.3s ease
+}
+
+.custom-select2-dropdown{
+  background-color: crimson;
+}
+
+/* New Component form */
+
+.NewCompForm label{
+  font-weight: bold;
+}
+.NewCompForm{
+  display:flex;
+  flex-direction: column;
+  gap:2%;
+  align-items: center;
+  text-align: center;
+}
+
+.NewCompContainer{
+  display: flex;
+  flex-direction: column;
+
+  padding:10%;
+
+  border-radius: 3%;
+  border-color:burlywood;
+  border-style: ridge;
+
+  background-image: url('https://i.redd.it/jdlvwaiyvg581.jpg');
+  background-position: center;
 }
