@@ -2,6 +2,7 @@ import $ from 'jquery';
 import 'select2';
 import { useEffect } from 'react';
 const NewComponentForm = () =>{
+    let listopen: boolean = false;
     useEffect(() => {
         // Initialize Select2 with custom templates
         $('#Comptype').select2({
@@ -11,14 +12,25 @@ const NewComponentForm = () =>{
           templateSelection: formatState, 
         });
     
-        $('.select2-container').click(function() {
-            $('#Comptype').select2('open')
-        });
         
-        $('.select2-container').click(function(){
-            $('Comptype').select2('close')
+
+        $(document).on('click','.select2-container',function() {
+            if(!listopen){
+                $('#Comptype').select2('open')
+            }else{
+                $('#Comptype').select2('close')
+            }
+            
         })
 
+        $('#Compytype').on("select2:open",function(){
+            listopen = true
+        })
+        $('#Compytype').on("select2:close",function(){
+            listopen = false
+        })
+        
+        
         // Cleanup on component unmount
         return () => {
             $('#Comptype').css('display', 'none')
@@ -53,7 +65,7 @@ const NewComponentForm = () =>{
         
         <form className='NewCompForm'>
             <div className='NewCompContainer'>
-                <label className="">Component Name</label>
+                <label className="InputLabel">Component Name</label>
                 {/*<img src="https://cdn-icons-png.flaticon.com/512/950/950484.png" alt="idk lol"></img>*/}
 
                 <select name="Comptype" id="Comptype" className='Comptype'>
@@ -89,7 +101,7 @@ const NewComponentForm = () =>{
                         <option value="Load-sensing-valve">Load-sensing valve</option>
                     </optgroup>
 
-                    <optgroup label="Electrified powertrain components">
+                    <optgroup label="Electrified powertrain components" className='Optgroup'>
                         <option value="Electric-motor">Electric motor</option>
                         <option value="High-voltage-battery-pack">High voltage battery pack</option>
                         <option value="Battery-management-system">Battery management system</option>
@@ -193,46 +205,60 @@ const NewComponentForm = () =>{
 
 
                     <optgroup label="Transmission system">
-                        <option value="Axle">Axle</option>
-                        <option value="Ball-joint">Ball oint</option>
-                        <option value="Camber-arm">Camber arm</option>
-                        <option value="Control-arm">Control arm</option>
-                        <option value="Idler-arm">Idler arm</option>
-                        <option value="Kingpin">Kingpin</option>
-                        <option value="Lateral-link">Lateral link</option>
-                        <option value="Panhard-rod">Panhard rod</option>
-                        <option value="Pitman-arm">Pitman arm</option>
-                        <option value="Power-steering">Power steering</option>
-                        <option value="Rack-end">Rack end</option>
-                        <option value="Shock-absorber">Shock absorber</option>
-                        <option value="Spindle">Spindle</option>
-                        <option value="Spring">Spring</option>
-                        <option value="Stabilizer-bars">Stabilizer bars</option>
-                        <option value="Steering-arm">Steering arm</option>
-                        <option value="Steering-box">Steering box</option>
-                        <option value="Steering-pump">Steering pump</option>
-                        <option value="Steering-column-assembly">Steering column assembly</option>
-                        <option value="Steering-rack">Steering rack</option>
-                        <option value="Steering-shaft">Steering shaft</option>
-                        <option value="Steering-wheel">Steering wheel</option>
-                        <option value="Strut">Strut</option>
-                        <option value="Stub-axle">Stub axle</option>
-                        <option value="Suspension-link">Suspension link</option>
-                        <option value="Tie-Rod-End">Tie Rod End</option>
-                        <option value="Trailing-arm">Trailing arm</option>
+                        <option value="Adjustable-pedal">Adjustable pedal</option>
+                        <option value="Axle-shaft">Axle shaft</option>
+                        <option value="Bell-housing">Bell housing</option>
+                        <option value="Universal-joint">Universal joint</option>
+                        <option value="Carrier-assembly">Carrier assembly</option>
+                        <option value="Chain-wheel-and-sprocket">Chain wheel and sprocket</option>
+                        <option value="Clutch-assembly">Clutch assembly</option>
+                        <option value="Clutch-cable">Clutch cable</option>
+                        <option value="Clutch-disk">Clutch disk</option>
+                        <option value="Clutch-fan">Clutch fan</option>
+                        <option value="Clutch-fork">Clutch fork</option>
+                        <option value="Clutch-hose">Clutch hose</option>
+                        <option value="Clutch-lever">Clutch lever</option>
+                        <option value="Clutch-lining">Clutch lining</option>
+                        <option value="Differential">Differential</option>
+                        <option value="Flywheel">Flywheel</option>
+                        <option value="Gear-stick">Gear stick</option>
+                        <option value="Gearbox">Gearbox</option>
+                        <option value="Idler-gear">Idler gear</option>
+                        <option value="Knuckle">Knuckle</option>
+                        <option value="Master-cylinder">Master cylinder</option>
+                        <option value="Output-shaft">Output shaft</option>
+                        <option value="Pinion">Pinion</option>
+                        <option value="Planetary-gear-set">Planetary gear set</option>
+                        <option value="Prop-shaft">Prop shaft</option>
+                        <option value="Shift-cable">Shift cable</option>
+                        <option value="Shift-fork">Shift fork</option>
+                        <option value="Shift-knob">Shift knob</option>
+                        <option value="Slave-cylinder">Slave cylinder</option>
+                        <option value="Speed-reducer">Speed reducer</option>
+                        <option value="Speedometer-gear">Speedometer gear</option>
+                        <option value="Steering-gear">Steering gear</option>
+                        <option value="Torque-converter">Torque converter</option>
+                        <option value="Trans-axle-housing">Trans-axle housing</option>
+                        <option value="Transfer-case">Transfer case</option>
+                        <option value="Transmission-gear">Transmission gear</option>
+                        <option value="Transmission-pan">Transmission pan</option>
+                        <option value="Transmission-seal-and-bonded-piston">Transmission seal and bonded piston</option>
+                        <option value="Transmission-spring">Transmission spring</option>
+                        <option value="Transmission-yoke">Transmission yoke</option>
                     </optgroup>
 
 
                 </select>
                 <br/>
-                <label className="">Change date</label>
+                <label className="InputLabel">Change date</label>
                 <input type="date" id="ChangeDate" name="ChangeDate"/>
                 <br/>
-                <label className="">Mileage on change</label>
-                <input type="number" id="MileChange" name="MileChange"/>
+                <label className="InputLabel">Mileage on change</label>
+                <input type="number" min="1" id="MileChange" name="MileChange"/>
                 <br/>
-                <a href="https://www.flaticon.com/authors/ddara" title="icons">icons created by dDara</a>
+                
                 <input type="submit" value="Submit"/>
+                <a href="https://www.flaticon.com/authors/ddara" title="icons">Component icons created by dDara</a>
             </div>
         </form>
     </>
