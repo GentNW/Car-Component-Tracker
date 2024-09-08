@@ -1,26 +1,26 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import Homepage from './Components/HomePage';
+import { Route,Routes } from 'react-router-dom';
+import Layout from './Components/Layout';
+import NewComponent from './Features/Component/NewComponent';
+import DashLayout from './Components/DashLayout';
+import EditComponent from './Features/Component/EditComponent';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Routes>
+        <Route path='/' element={<Layout/>}>
+          <Route path = "dash" element={<DashLayout />}>
+            <Route index element={<Homepage/>}/>
+            <Route path='newcomp' element={<NewComponent/>}/>
+            <Route path='editcomp' element={<EditComponent/>}/>
+          </Route>{/*end of Dash layout*/}
+        </Route>{/*end of layout*/}
+      </Routes>
+    </>
+  )
 }
 
 export default App;
