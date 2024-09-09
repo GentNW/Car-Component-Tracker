@@ -161,3 +161,59 @@
   background-position: center;
   background-size: cover;
 }
+
+/* USER MENU */
+.Dash-Icon{
+  width: 32px;
+  height: 32px;
+}
+
+.user-menu{
+  display:none;
+  position:absolute;
+  top: 60px;
+  right: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1%;
+  width: 150px;
+  z-index: 1000;
+}
+.user-menu ul{
+  list-style: none;
+  padding: 0;
+  margin:0;
+}
+
+.user-menu ul li{
+  border-radius: 5%;
+  
+  padding: 10px 0;
+}
+
+.user-menu ul li a {
+  text-decoration: none;
+  color: #333;
+}
+.user-menu a{
+  padding-right: 55%;
+  padding-top:10%;
+  padding-bottom:10%;
+}
+
+.user-menu li:hover {
+  background-color: #878787;
+
+  transition-duration: 0.2s;
+}
+
+.user-icon img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.egg{
+  display: none;
+}
