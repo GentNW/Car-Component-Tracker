@@ -16,19 +16,24 @@ const NewComponentForm = () =>{
 
         $(document).on('click','.select2-container',function() {
             if(!listopen){
+                console.log("Opening")
                 $('#Comptype').select2('open')
+                listopen = true
             }else{
+                console.log("Closing")
                 $('#Comptype').select2('close')
+                listopen = false
             }
             
         })
-
-        $('#Compytype').on("select2:open",function(){
-            listopen = true
-        })
-        $('#Compytype').on("select2:close",function(){
+        if(1===1)
+        {
+            console.log("clicked away")
+            $('#Compytype').on("select2:close",function(){
             listopen = false
         })
+        }
+        
         
         
         // Cleanup on component unmount
@@ -45,11 +50,11 @@ const NewComponentForm = () =>{
 
       // Function to format the dropdown items
       function formatState(state: any) {
-        const baseUrl = 'Images/Icons/';
+        const baseUrl = '/Images/Icons/';
         if (state.text==="Braking system" || state.text === "Electrified powertrain components"||state.text==="Engine Cooling system" || state.text==="Engine oil system" || state.text==="Exhaust system" || state.text==="Fuel supply system" || state.text==="Suspension and steering systems" || state.text==="Transmission system") {
 
             return $(
-              `<span className="Group-title"><img className="optgroup-image" style="width:32px; height:32px;" src="${baseUrl}/${state.text.toLowerCase()}.png" alt="Noimg" />${state.text}</span>`
+              `<span className="Group-title"><img className="optgroup-image" style="width:32px; height:32px;" src="${baseUrl}/${state.text.toLowerCase()}.png" alt="${baseUrl}/${state.text.toLowerCase()}.png" />${state.text}</span>`
             );
 
         }
@@ -63,8 +68,8 @@ const NewComponentForm = () =>{
     const content = (
     <>
         
-        <form className='NewCompForm'>
-            <div className='NewCompContainer'>
+        <form className='CompForm'>
+            <div className='CompContainer'>
                 <label className="InputLabel">Component Name</label>
                 {/*<img src="https://cdn-icons-png.flaticon.com/512/950/950484.png" alt="idk lol"></img>*/}
 
