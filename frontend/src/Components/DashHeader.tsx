@@ -3,8 +3,8 @@ import $ from 'jquery';
 const DashHeader = () =>{
     
     const navigate = useNavigate()
-    const onAddCompClicked = () => navigate('./dash/NewComponent')
-    const onAddCarClicked = () => navigate('./dash/NewCar')
+    const onAddCompClicked = () => navigate('./newcomp')
+    const onAddCarClicked = () => navigate('./newcar')
     const userIcon = document.getElementById('Dash-Icon');
     let isopen:boolean;
     /*$(document).ready(function(){
@@ -21,12 +21,12 @@ const DashHeader = () =>{
             if(userMenu){
                 const currentDisplay = window.getComputedStyle(userMenu).display;
                 if (!isopen) {
-                    //console.log(currentDisplay);
+                    console.log(currentDisplay);
                     userMenu.style.display = 'block';
                     isopen = true;
                 }  else if (isopen){
                     //console.log(isopen)
-                    //console.log('Hiding user menu');
+                    console.log('Hiding user menu');
                     userMenu.style.display = 'none';
                     isopen = false;
                 }
@@ -87,11 +87,12 @@ const DashHeader = () =>{
                         <h2 className="dash-header__button">idk</h2>
                     </div>
 
+
                     <div className="center-content">
-                        <a href="/dash"><h1 className='dash-header__title'>Car Doctor</h1></a>
                         <Link to="/dash">
-                            
+                            <h1 className='dash-header__title'>Car Doctor</h1>
                         </Link>
+
                     </div>
 
                     <div className="right-content">
