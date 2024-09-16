@@ -1,63 +1,75 @@
-.App {
-  text-align: center;
+:root {
+  /* COLORS */
+  --BGCOLOR: #1e282a;
+  --BORDER-COLOR: #FFF;
+  --COLOR: #FFF;
+  --ERROR: firebrick;
+  --INACTIVE: lightgray;
+  --LINK-COLOR: whitesmoke;
+  --LINK-HOVER: rgba(211, 211, 211, 0.9);
+  --blog-BGCOLOR: hsla(240, 64%, 27%, 0.65);
+  --STATUS-COMPLETE: limegreen;
+  --STATUS-OPEN: firebrick;
+  --TABLE-BGCOLOR: #FFF;
+  --TABLE-COLOR: #000;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.Main-content{
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  display:flex;
+
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.Main-title{
+  font-size:8vw;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Main-buttons{
+  display:flex;
+  justify-content: space-evenly;
 }
+
+.Main-button a{
+  font-size:2vw;
+  color:var(--COLOR);
+  text-decoration: none;
+}
+.Main-button:hover a{
+  color:var(--LINK-HOVER)
+}
+
 
 /* DASH HEADER */
 .dash-header{
   position: sticky;
   top:0;
   z-index: 1;
-  background-color: #929292;
+  background-color: #1e282a;
   padding: 0 0.5em;
-  border-bottom: 1px solid #9e0000
+  border-bottom: 1px solid var(--COLOR);
 }
+
+
 
 .dash-header__container{
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
-  
+  justify-content:space-evenly;
+  color:var(--COLOR); 
 }
 .dash-header__title{
   text-align: center;
-  color:black;
+  color:var(--COLOR);
 }
 
+.dash-header__title:hover{
+  color:var(--LINK-HOVER);
+  text-decoration-line: none;
+}
 .dash-header__button{
 
 }
@@ -69,9 +81,13 @@
 }
 
 .center-content{
+  text-align: center;
   padding: 0; 
   margin: 0;  
   flex-grow: 1;
+}
+.center-content a {
+  text-decoration: none;
 }
 
 .right-content{
@@ -82,23 +98,68 @@
 }
 
 
+/* DASH FOOTER */
+.Dash-footer{
+  position:absolute;
+  bottom: 0;
+  width:100%;
+  z-index: 1;
 
-/* New Component select*/
+  background-color: #1e282a;
+  padding: 0 0.5em;
+
+  border-top: 1px solid var(--COLOR)
+
+}
+
+.Dash-footer__container{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  color:var(--COLOR); 
+}
+.Dash-footer__title{
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 0.9%;
+  color:var(--COLOR);
+}
+
+.Dash-footer__title:hover{
+  color:var(--LINK-HOVER);
+}
+
+.Dash-footer__center{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content:center;
+  padding: 0.1%; 
+  margin: 0;  
+  flex-grow: 1;
+}
+
+.Dash-footer a {
+  text-decoration: none;
+}
+
+
+/* NEW COMPONENT TEXT*/
 
 .Group-title{
   border: #61dafb;
-  color:blue;
+  
 }
 
 .select2-container  {
   max-height: 50%;
-  
+  color:var(--BGCOLOR);
   overflow-y: scroll;
   overflow-x:hidden;
   border-radius: 5px;
   border-style: solid;
   border-color: black; 
-  background-color: rgb(255, 255, 255);
+  background-color:var(--COLOR);
 
   cursor: pointer;
   padding: 10px;
@@ -115,7 +176,6 @@
   
   color:black;
   
-  
   background-color: rgb(255, 255, 255);
 }
 
@@ -129,8 +189,9 @@
   background-color: crimson;
 }
 
-/* New Component labels */
+/* NEW COMPONENT LABELS */
 .InputLabel {
+  color: var(--BGCOLOR);
   font-size: larger;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -141,6 +202,7 @@
   font-weight: bold;
 }
 .CompForm{
+  padding:10px;
   display:flex;
   flex-direction: column;
   gap:2%;
@@ -151,11 +213,9 @@
 .CompContainer{
   display: flex;
   flex-direction: column;
-  padding:10%;
+  padding:5%;
 
   border-radius: 3%;
-  border-color:burlywood;
-  border-style: ridge;
 
   background-image: url('https://static.vecteezy.com/system/resources/previews/003/267/214/non_2x/modern-clean-white-background-free-vector.jpg');
   background-position: center;
@@ -168,6 +228,9 @@
   height: 32px;
 }
 
+.Dash-Icon:hover{
+  src: "https://static-00.iconduck.com/assets.00/profile-user-icon-2048x2048-m41rxkoe.png";
+}
 .user-menu{
   display:none;
   position:absolute;
@@ -217,3 +280,4 @@
 .egg{
   display: none;
 }
+
