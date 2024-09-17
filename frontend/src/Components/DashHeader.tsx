@@ -7,15 +7,8 @@ const DashHeader = () =>{
     const onAddCarClicked = () => navigate('./newcar')
     const userIcon = document.getElementById('Dash-Icon');
     let isopen:boolean;
-    /*$(document).ready(function(){
-        $("img").click(function(){
-          $("user-menu").toggle();
-          console.log("i want to kms")
-        });
-      });*/
 
     //User menu toggle
-
     function OnProfileClick(){
         const menu = document.getElementById("user-menu")!
         if((menu.style.display === 'none' || menu.style.display === '') ){
