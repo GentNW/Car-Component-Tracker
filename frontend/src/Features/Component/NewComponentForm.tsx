@@ -14,32 +14,13 @@ const NewComponentForm = () =>{
     
         
 
-        $(document).on('click','.select2-container',function() {
-            if(!listopen){
-                console.log("Opening")
-                $('#Comptype').select2('open')
-                listopen = true
-            }else{
-                console.log("Closing")
-                $('#Comptype').select2('close')
-                listopen = false
-            }
-            
-        })
-        if(1===1)
-        {
-            console.log("clicked away")
-            $('#Compytype').on("select2:close",function(){
-            listopen = false
-        })
-        }
         
         
         
         // Cleanup on component unmount
         return () => {
             $('#Comptype').css('display', 'none')
-            $('#Comptype').select2('destroy')
+            //$('#Comptype').select2('destroy')
         };
       }, []);
       
@@ -70,9 +51,8 @@ const NewComponentForm = () =>{
         
         <form className='CompForm'>
             <div className='CompContainer'>
-                <label className="InputLabel">Component Name</label>
-                {/*<img src="https://cdn-icons-png.flaticon.com/512/950/950484.png" alt="idk lol"></img>*/}
 
+                <label className="InputLabel">Component Name</label>
                 <select name="Comptype" id="Comptype" className='Comptype'>
                     
                     <optgroup label="Braking system" className="Optgroup">    
@@ -255,9 +235,11 @@ const NewComponentForm = () =>{
 
                 </select>
                 <br/>
+                
                 <label className="InputLabel">Change date</label>
                 <input type="date" id="ChangeDate" name="ChangeDate"/>
                 <br/>
+
                 <label className="InputLabel">Mileage on change</label>
                 <input type="number" min="1" id="MileChange" name="MileChange"/>
                 <br/>

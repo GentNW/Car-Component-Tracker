@@ -1,12 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
-import $ from 'jquery';
 const DashHeader = () =>{
     
     const navigate = useNavigate()
     const onAddCompClicked = () => navigate('./newcomp')
     const onAddCarClicked = () => navigate('./newcar')
-    const userIcon = document.getElementById('Dash-Icon');
-    let isopen:boolean;
 
     //User menu toggle
     function OnProfileClick(){
@@ -43,12 +40,6 @@ const DashHeader = () =>{
             </button>
         </>
     )
-    const myStyle = {
-        width: "40px",
-        height: "40px",
-        cursor: "pointer",
-      };
-
     const UserIconbutton = (
         <>
             <button onClick={OnProfileClick} className="user-icon"><img id='Dash-Icon' src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png' alt='icon' className="user-icon" /></button>
@@ -82,10 +73,8 @@ const DashHeader = () =>{
                     </div>
 
                     <div className="right-content">
-                        <h2 className="dash-header__button"></h2>
                         <nav className='dash-header__nav'>
                             {buttonContent}
-                            
                         </nav>
                     </div>
                     
