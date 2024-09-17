@@ -1,13 +1,28 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link} from "react-router-dom"
 const DashHeader = () =>{
+
     
-    const navigate = useNavigate()
-    const onAddCompClicked = () => navigate('./newcomp')
-    const onAddCarClicked = () => navigate('./newcar')
 
     //User menu toggle
+    function HideSection(menu:HTMLElement){
+        menu.style.display = 'none'
+    }
+
+    function OnClickOutside(event:MouseEvent){
+        const menu = document.getElementById("user-menu")! as HTMLElement
+        const icon = document.getElementById("user-icon")! as HTMLElement
+        
+        if(menu && !menu.contains(event.target as Node) ){
+            if(icon && !icon.contains(event.target as Node)){
+                HideSection(menu);
+            }
+            
+        }
+    }
+    document.addEventListener('click', OnClickOutside);
+    
     function OnProfileClick(){
-        const menu = document.getElementById("user-menu")!
+        const menu = document.getElementById("user-menu")! as HTMLElement
         if((menu.style.display === 'none' || menu.style.display === '') ){
             menu.style.display = 'block'
 
@@ -17,42 +32,17 @@ const DashHeader = () =>{
         }
     }
 
-    const AddCompbutton = (
-        
-        <>
-            <button
-                className="Dash-Header__Button"
-                title = "Add Component"
-                onClick={onAddCompClicked}
-            >
-                    AddComp
-            </button>
-        </>
-    )
-    const AddCarbutton = (
-        <>
-            <button
-                className="Dash-Header__Button"
-                title = "Add Car"
-                onClick={onAddCarClicked}
-            >
-                    AddCar
-            </button>
-        </>
-    )
+    //Button to display user menu
     const UserIconbutton = (
         <>
-            <button onClick={OnProfileClick} className="user-icon"><img id='Dash-Icon' src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png' alt='icon' className="user-icon" /></button>
+            <button onClick={OnProfileClick} className="user-icon" id="user-icon"><img id='Dash-Icon' src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png' alt='icon' /></button>
         </>
     )
      
 
-    const buttonContent=(
+    const ButtonContent=(
         <>
-            {AddCompbutton}
-            {AddCarbutton}
             {UserIconbutton}
-            {/*<p>Buttons(AddComp,AddCar,Usericon)</p>*/}
         </>
     )
     const content = (
@@ -64,7 +54,6 @@ const DashHeader = () =>{
                         <h2 className="dash-header__button">idk</h2>
                     </div>
 
-
                     <div className="center-content">
                         <Link to="/dash">
                             <h1 className='dash-header__title'>Car Doctor</h1>
@@ -74,7 +63,7 @@ const DashHeader = () =>{
 
                     <div className="right-content">
                         <nav className='dash-header__nav'>
-                            {buttonContent}
+                            {ButtonContent}
                         </nav>
                     </div>
                     
@@ -83,6 +72,8 @@ const DashHeader = () =>{
         </header>
         <section id="user-menu" className="user-menu">
                     <ul>
+                        <li><a href="/newcomp">Add Component</a></li>
+                        <li><a href="/newcar">Add Car</a></li>
                         <li><a href="/cars">Cars</a></li>
                         <li><a href="/settings">Settings</a></li>
                         <li><a href="/logout">logout</a></li>
