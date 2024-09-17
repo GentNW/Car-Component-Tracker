@@ -15,46 +15,39 @@ const DashHeader = () =>{
       });*/
 
     //User menu toggle
-    if(userIcon){
-        userIcon.addEventListener('click', function() {
-            const userMenu = document.getElementById('user-menu');
-            if(userMenu){
-                const currentDisplay = window.getComputedStyle(userMenu).display;
-                if (!isopen) {
-                    console.log(currentDisplay);
-                    userMenu.style.display = 'block';
-                    isopen = true;
-                }  else if (isopen){
-                    //console.log(isopen)
-                    console.log('Hiding user menu');
-                    userMenu.style.display = 'none';
-                    isopen = false;
-                }
-            }
-            
-        });
+
+    function OnProfileClick(){
+        const menu = document.getElementById("user-menu")!
+        if((menu.style.display === 'none' || menu.style.display === '') ){
+            menu.style.display = 'block'
+
+        }else if(menu.style.display === 'block'){
+            menu.style.display = 'none'
+
+        }
     }
-    
-    
-    
 
     const AddCompbutton = (
         
         <>
             <button
-                className="Dash-button"
+                className="Dash-Header__Button"
                 title = "Add Component"
                 onClick={onAddCompClicked}
-            >AddComp</button>
+            >
+                    AddComp
+            </button>
         </>
     )
     const AddCarbutton = (
         <>
             <button
-                className="Dash-button"
+                className="Dash-Header__Button"
                 title = "Add Car"
                 onClick={onAddCarClicked}
-            >AddCar</button>
+            >
+                    AddCar
+            </button>
         </>
     )
     const myStyle = {
@@ -65,7 +58,7 @@ const DashHeader = () =>{
 
     const UserIconbutton = (
         <>
-            <img id='Dash-Icon' src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png' alt='icon' className="user-icon" style={myStyle} />
+            <button onClick={OnProfileClick} className="user-icon"><img id='Dash-Icon' src='https://cdn-icons-png.flaticon.com/512/1144/1144760.png' alt='icon' className="user-icon" /></button>
         </>
     )
      
