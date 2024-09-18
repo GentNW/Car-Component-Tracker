@@ -3,6 +3,7 @@
   --BGCOLOR: #1e282a;
   --BORDER-COLOR: #FFF;
   --COLOR: #FFF;
+  --COLOR-DARK:#000000;
   --ERROR: firebrick;
   --INACTIVE: lightgray;
   --BUTTON-PRESS:#03dac6;
@@ -93,7 +94,10 @@
   color:var(--COLOR); 
 }
 .dash-header__title{
-  
+  color:var(--COLOR);
+}
+.dash-header__title h1{
+  font-size:10vw;
   color:var(--COLOR);
 }
 
@@ -408,6 +412,61 @@
 /* WELCOME PAGE */
 .Welcome-Section{
 
+}
+
+/* CAR LIST */
+.Car-ul{
+  display: flex;
+  flex-flow: row;
+  gap: 1vw;
+  align-items: center;
+}
+.Add-Icon{
+  position:flexbox;
+  
+  height: 100vh;
+
+  background-color: transparent;
+  border:none;
+  top:24vh;
+  
+  width:auto;
+  height:64px;
+}
+.Add-Icon img{
+  width:auto;
+  height:64px;  
+}
+
+.Add-Icon:hover{
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+
+.Car-Box{
+  background-color: var(--COLOR);
+  padding:16px;
+  border-radius: 5px;
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+.Car-Box:hover{
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+.Car-Box img{
+ width:auto;
+ height:128px;
+}
+.Car-Box button{
+  background-color: transparent;
+  border:none;
+}
+
+.Car-Box-Text{
+  position:static;
+  color:var(--COLOR-DARK);
+  border-bottom: 1px solid var(--COLOR-DARK);
 }
 
 /* MISC */
