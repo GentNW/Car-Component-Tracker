@@ -16,10 +16,14 @@
   --TABLE-COLOR: #000;
 }
 
+.Dash-Container{
+  min-height: 88vh;
+}
+
 /* HOME PAGE */
 .Main-Content{
+  
   min-height: 100vh;
-
   display:flex;
 
   justify-content: center;
@@ -85,11 +89,11 @@
 .dash-header__container{
   display: flex;
   flex-flow: row nowrap;
-  justify-content:space-between;
+  
   color:var(--COLOR); 
 }
 .dash-header__title{
-  text-align: center;
+  
   color:var(--COLOR);
 }
 
@@ -133,6 +137,7 @@
 }
 
 .center-content{
+  align-items: center;
   text-align: center;
   padding: 0; 
   margin: 0;  
@@ -158,16 +163,15 @@
   border: none;
 }
 .user-icon img{
-  width: 1vw;
-  height: 1vh;
+  width: 3vw;
+  height: 3vw;
   cursor: pointer;
   
 }
 
-
 /* DASH FOOTER */
 .Dash-footer{
-  position:absolute;
+  position:relative;
   bottom: 0;
   width:100%;
   z-index: 1;
@@ -193,10 +197,6 @@
   color:var(--COLOR);
 }
 
-.Dash-footer__title:hover{
-  color:var(--LINK-HOVER);
-}
-
 .Dash-footer__center{
   display: flex;
   flex-flow: row nowrap;
@@ -208,6 +208,17 @@
 
 .Dash-footer a {
   text-decoration: none;
+}
+.Dash-footer-link {
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 0.9%;
+  text-decoration: none;
+  color:var(--COLOR);
+}
+.Dash-footer-link:hover{
+  color:var(--LINK-HOVER)
 }
 
 
@@ -319,7 +330,7 @@
 }
 
 
-/* New Component form */
+/* Component form */
 
 .CompForm label{
   font-weight: bold;
@@ -346,62 +357,60 @@
 }
 
 /* USER MENU */
-.Dash-Icon{
-  width: 32px;
-  height: 32px;
-}
-
-.Dash-Icon:hover{
-  src: "https://static-00.iconduck.com/assets.00/profile-user-icon-2048x2048-m41rxkoe.png";
-}
 .user-menu{
   display:none;
   position:absolute;
-  top: 60px;
-  right: 10px;
+  top:6.5vh;
+  right: 0.1vw;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 1%;
-  width: 150px;
+  width: 13vw;
   z-index: 1000;
+  overflow-x: hidden;
 }
 .user-menu ul{
+  border-radius: 5%;
   list-style: none;
   padding: 0;
   margin:0;
 }
 
-.user-menu ul li{
+.user-menu li{
   border-radius: 5%;
-  
-  padding: 10px 0;
 }
 
-.user-menu ul li a {
+.user-menu button {
+  
+  background-color: transparent;
+  border: none;
+  display:inherit;
   text-decoration: none;
   color: #333;
-}
-.user-menu a{
-  padding-right: 55%;
-  padding-top:10%;
-  padding-bottom:10%;
-}
 
+
+  font-size:1.1vw;
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+  padding-right: 2vw;
+}
 .user-menu li:hover {
   background-color: #878787;
 
   transition-duration: 0.2s;
 }
 
-.user-icon img {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
+.hidden{
+  display: none;
 }
 
+/* WELCOME PAGE */
+.Welcome-Section{
 
+}
 
+/* MISC */
 .egg{
   display: none;
 }

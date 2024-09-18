@@ -1,7 +1,9 @@
-import { Link} from "react-router-dom"
+import { Link, useLocation, useNavigate} from "react-router-dom"
+
 const DashHeader = () =>{
 
-    
+    const { pathname } = useLocation()
+    const navigate = useNavigate()
 
     //User menu toggle
     function HideSection(menu:HTMLElement){
@@ -40,6 +42,11 @@ const DashHeader = () =>{
     )
      
 
+    const OnNewCompClick = () => navigate('/dash/newcomp')
+    const OnNewCarClick = () => navigate('/dash/newcar')
+    const OnSettingsClick = () => navigate('/dash/settings')
+    const OnLogoutClick = () => navigate('/logout')
+
     const ButtonContent=(
         <>
             {UserIconbutton}
@@ -72,11 +79,11 @@ const DashHeader = () =>{
         </header>
         <section id="user-menu" className="user-menu">
                     <ul>
-                        <li><a href="/newcomp">Add Component</a></li>
-                        <li><a href="/newcar">Add Car</a></li>
-                        <li><a href="/cars">Cars</a></li>
-                        <li><a href="/settings">Settings</a></li>
-                        <li><a href="/logout">logout</a></li>
+                        <li><button onClick = {OnNewCompClick}>Add Component</button></li>
+                        <li><button onClick = {OnNewCarClick}>Add Car</button></li>
+                        <li><button onClick = {OnNewCompClick}>Car</button></li>
+                        <li><button onClick = {OnSettingsClick}>Settings</button></li>
+                        <li><button onClick = {OnLogoutClick}>Logout</button></li>
                     </ul>
         </section>
         </>
