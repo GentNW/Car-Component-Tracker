@@ -3,14 +3,14 @@ import { apiSlice } from "./api/ApiSlice"
 import { apiSlicenoauth } from "./api/ApiSliceNoAuth"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import authReducer from '../Features/Auth/AuthSlice'
-import carsreducer from '../Features/Car/CarApiSlice'
+import {carsApiReducer} from '../Features/Car/CarApiSlice'
 //import componentsreducer from from '../Features/Component/ComponentApiSlice'
 //reducers for each table in the database
 export type RootState = {
     [apiSlice.reducerPath]: ReturnType<typeof apiSlice.reducer>
     [apiSlicenoauth.reducerPath]: ReturnType<typeof apiSlicenoauth.reducer>
     auth: ReturnType<typeof authReducer>
-    cars: ReturnType<typeof carsreducer>
+    cars: ReturnType<typeof carsApiReducer>
     //components: ReturnType<typeof componentsreducer>
 };
 //Adding reducer paths
@@ -21,6 +21,8 @@ export const Store = configureStore({
     [apiSlicenoauth.reducerPath]: apiSlicenoauth.reducer, 
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
+    cars:carsApiReducer,
+    //components: componentsApiReducer
   },
   middleware: getDefaultMiddleware => 
     getDefaultMiddleware()
@@ -28,5 +30,4 @@ export const Store = configureStore({
     
     devTools: false
 })
-
 setupListeners(Store.dispatch)
