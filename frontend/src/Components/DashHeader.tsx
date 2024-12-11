@@ -43,7 +43,7 @@ const DashHeader = () =>{
      
 
     const OnNewCompClick = () => navigate('/dash/newcomp')
-    const OnNewCarClick = () => navigate('/dash/newcar')
+    const OnNewCarClick = () => navigate('/dash/Addcar')
     const OnSettingsClick = () => navigate('/dash/settings')
     const OnLogoutClick = () => navigate('/logout')
 

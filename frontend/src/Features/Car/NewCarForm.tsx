@@ -1,9 +1,28 @@
 import $ from 'jquery';
 import 'select2';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useAddNewCarsMutation } from './CarApiSlice';
 const NewCarForm = () =>{
+    
+    const [AddNewCars, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+        }] = useAddNewCarsMutation()
+         /*= async(e)*/
+        const onNewCarSubmit = () => { 
+            console.log("Cars should be added here")
+            //await AddNewCars({})
+        }
+        
+    //Table columns
+    const [CarBrand,setCarBrand]= useState('')
+    //const [validUsername, setValidUsername] = useState(false)
+    const [CarModel, setCarModel] = useState('')
+    //const [validPassword, setValidPassword] = useState(false)
+    const [Mileage, setMileage] = useState([""])
 
-      
     const content = (
     <>
         
@@ -65,8 +84,8 @@ const NewCarForm = () =>{
                 <label className="InputLabel">Mileage</label>
                 <input type="number" id="Mileage" name="Mileage"/>
                 <br/>
+                <input type="submit" value="Submit" onClick={onNewCarSubmit}/>
                 
-                <input type="submit" value="Submit"/>
             </div>
         </form>
     </>
