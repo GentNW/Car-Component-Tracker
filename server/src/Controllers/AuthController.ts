@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 import { Request, Response } from "express";
-import { UserInfo } from './UserInfoInterfact';
+import { VerifyErrors } from 'jsonwebtoken';
 import { CustomJwtPayload } from '../Middleware/CustomJwtPayloadInterface';
 export interface AuthRequestBody {
     username: string;
@@ -54,7 +54,7 @@ const login =  asyncHandler(async(req: Request<{}, {}, AuthRequestBody>,res:Resp
     res.cookie('jwt',refreshToken,{
         httpOnly: true, //only accessible by web server
         secure:true, //https
-        sameSite: 'None', //cross-site cookies
+        sameSite: 'none', //cross-site cookies
         maxAge: 7 * 24 * 60 * 60 *1000 //Cookie expiry should match refresh token's expiration time
 
     })
@@ -78,7 +78,7 @@ const refresh =  asyncHandler((req:Request,res:Response) => {
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
-        asyncHandler(async(err,decoded) =>{
+        asyncHandler(async(err:VerifyErrors,decoded:CustomJwtPayload) =>{
             if(err){
                 return res.status(403).json({ message: 'Forbidden'})
             }
@@ -86,7 +86,7 @@ const refresh =  asyncHandler((req:Request,res:Response) => {
             const foundUser = await User.findOne({ username: decoded.username})
 
             if(!foundUser){
-                return res.status(401),json({message: 'Unauthorized'})
+                return res.status(401).json({message: 'Unauthorized'})
             }
 
             const accessToken = jwt.sign({
@@ -117,7 +117,7 @@ const logout =  (req:Request,res:Response) => {
 
     res.clearCookie('jwt',{
         httpOnly:true,
-        sameSite:'None',
+        sameSite:'none',
         secure:true})
 
     res.json({message: "Cookie cleared"})
