@@ -7,10 +7,8 @@ const asyncHandler = require('express-async-handler')
 import { Request, Response } from "express";
 import { VerifyErrors } from 'jsonwebtoken';
 import { CustomJwtPayload } from '../Middleware/CustomJwtPayloadInterface';
-export interface AuthRequestBody {
-    username: string;
-    password: string;
-}
+import { AuthRequestBody } from "./AuthRequestBody";
+
 
 // @desc Login
 // @route Post /auth
