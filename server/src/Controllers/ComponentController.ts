@@ -42,7 +42,7 @@ export const updateComponent = async (req:Request,res:Response) =>{
 
     try{
         const result = await pool.query(
-            'UPDATE Component ComponentName=$1 ChangeDate=$2 MileageOnChange=$3 WHERE ID=$5 RETURNING *',
+            'UPDATE Component ComponentName=$1 ChangeDate=$2 MileageOnChange=$3 WHERE ID=$4 RETURNING *',
             [ComponentName,ChangeDate,MileageOnChange,ID]
         )
         if (result.rows.length === 0) {
