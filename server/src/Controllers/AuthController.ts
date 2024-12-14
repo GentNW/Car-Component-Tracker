@@ -1,13 +1,13 @@
-//import { AuthRequestBody } from "./AuthRequestBody"
-
 const User = require('../models/user')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+//const bcrypt = require('bcrypt')
+import jwt from 'jsonwebtoken';
 const asyncHandler = require('express-async-handler')
 import { Request, Response } from "express";
 import { VerifyErrors } from 'jsonwebtoken';
 import { CustomJwtPayload } from '../Middleware/CustomJwtPayloadInterface';
 import { AuthRequestBody } from "./AuthRequestBody";
+import { CustomRequest } from '../Middleware/CustomRequestInterface';
+import { JwtPayload } from 'jsonwebtoken';
 
 
 // @desc Login
@@ -42,9 +42,14 @@ const login =  asyncHandler(async(req: Request<{}, {}, AuthRequestBody>,res:Resp
     )
 
     //Refresh token
-    const refreshToken = jwt.sign(
-        { "username": foundUser.username},
-        process.env.REFRESH_TOKEN_SECRET,
+    const refreshToken = jwt.sign({
+           UserInfo: {
+                username: foundUser.username,
+                roles: foundUser.roles,
+                id: foundUser._id
+            },
+        } as CustomJwtPayload,
+        process.env.REFRESH_TOKEN_SECRET as string,
         { expiresIn: '1d'}
     )
 
@@ -64,45 +69,29 @@ const login =  asyncHandler(async(req: Request<{}, {}, AuthRequestBody>,res:Resp
 // @desc refresh
 // @route Get /auth/refresh
 //@access Public - because access token has expired
-const refresh =  asyncHandler((req:Request,res:Response) => {
-    const cookies = req.cookies
+const refresh = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+  const refreshToken = req.cookies.jwt;
 
-    if(!cookies?.jwt){
-        return res.status(401).json({message: 'Unauthorized'})
-    }
+  if (!refreshToken) {
+    res.status(403).json({ message: 'Refresh Token Required' });
+  }
 
-    const refreshToken = cookies.jwt
+  try {
+    // Verifying the refresh token using async/await (Promise-based)
+    const decoded = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string) as CustomJwtPayload;
 
-    jwt.verify(
-        refreshToken,
-        process.env.REFRESH_TOKEN_SECRET,
-        asyncHandler(async(err:VerifyErrors,decoded:CustomJwtPayload) =>{
-            if(err){
-                return res.status(403).json({ message: 'Forbidden'})
-            }
+    // Using the new access token after verification
+    const newAccessToken = jwt.sign(
+      { UserInfo: { username: decoded.UserInfo.username, roles: decoded.UserInfo.roles, id: decoded.UserInfo.id } },
+      process.env.ACCESS_TOKEN_SECRET as string,
+      { expiresIn: '15m' }
+    );
 
-            const foundUser = await User.findOne({ username: decoded.username})
-
-            if(!foundUser){
-                return res.status(401).json({message: 'Unauthorized'})
-            }
-
-            const accessToken = jwt.sign({
-                    "UserInfo": {
-                        "username": foundUser.username,
-                        "roles": foundUser.roles,
-                        "id": foundUser._id
-                    }
-                },
-                process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '1m'}
-            )
-
-            res.json({ accessToken })
-        })
-    )
-
-})
+    res.json({ accessToken: newAccessToken });
+  } catch (err) {
+    res.status(403).json({ message: 'Invalid Refresh Token' });
+  }
+});
 
 // @desc Login
 // @route Post /auth/logout
