@@ -76,12 +76,13 @@ export const validateRefreshToken = async (refreshToken: string): Promise<Custom
   }
 }
 
-//Delete a refresh token by its value
+//Soft Delete a refresh token by its value
 export const revokeRefreshToken = async (token: string) => {
   const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
   const refreshToken = await refreshTokenRepository.findOne({ where: { refresh_token: token } });
 
   if (refreshToken) {
-    await refreshTokenRepository.remove(refreshToken);
+    await refreshTokenRepository.softDelete(refreshToken);
+    await refreshTokenRepository.update(refreshToken.id, {is_deleted: true})
   }
 };
