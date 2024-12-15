@@ -25,9 +25,7 @@ const verifyJWT = (req:CustomRequest,res:Response,next:NextFunction) => {
 
             if(decoded?.UserInfo)
             {
-                req.user = decoded.UserInfo.username
-                req.roles = decoded.UserInfo.roles
-                //res.userId = decoded.UserInfo.id
+                req.userId = decoded.UserInfo.CarUserID
             }
             else
             {
