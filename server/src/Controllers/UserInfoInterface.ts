@@ -1,5 +1,6 @@
 export interface UserInfo {
-    username: string;
-    roles: string[];
-    id: string;
+    CarUserID: number
+    UserName: string
+    Password: string
+    CarsOwned: number
 }
