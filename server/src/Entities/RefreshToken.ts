@@ -3,7 +3,7 @@ import { User } from './User';
 
 @Entity()
 export class RefreshToken {
-  [x: number]: { CarUserID: number; };
+  [x: number]: { CarUserID: number };
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -21,5 +21,6 @@ export class RefreshToken {
 
   @DeleteDateColumn()
   deleted_at?: Date;
+  is_deleted?:boolean;
   token: { CarUserID: number; };
 }
