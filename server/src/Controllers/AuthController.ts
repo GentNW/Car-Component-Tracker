@@ -1,13 +1,7 @@
-//const bcrypt = require('bcrypt')
 import jwt from 'jsonwebtoken';
 const asyncHandler = require('express-async-handler')
 import { Request, Response } from "express";
 import { AppDataSource } from '../data-source';
-import { VerifyErrors } from 'jsonwebtoken';
-import { CustomJwtPayload } from '../Middleware/CustomJwtPayloadInterface';
-import { AuthRequestBody } from "./AuthRequestBody";
-import { CustomRequest } from '../Middleware/CustomRequestInterface';
-import { JwtPayload } from 'jsonwebtoken';
 import { issueRefreshToken,validateRefreshToken } from './RefreshTokenController';
 import { User } from '../Entities/User';
 
