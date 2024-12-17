@@ -1,13 +1,13 @@
 import { AppDataSource } from '../data-source';
 import { Car } from '../Entities/Car';
+import { Component } from '../Entities/Component';
 import { Request, Response } from 'express';
-import pool from '../db'
-import { where } from 'sequelize';
+
 
 
 //Create
 export const createCar = async (req:Request,res:Response) =>{
-    const { OwnerID,CarModel, Mileage,CarBrand} = req.body
+    const { OwnerID,CarModel, Mileage,CarBrand, Component} = req.body
 
     const CarRepository = AppDataSource.getRepository(Car)
     
@@ -17,20 +17,20 @@ export const createCar = async (req:Request,res:Response) =>{
     car.Mileage = Mileage
     car.OwnerID = OwnerID
     car.CarBrand = CarBrand
-
+    car.Components = Component
     try{
         const result = await CarRepository.save(car)
         if(!result){
-            res.status(400).json({ message: 'Invalid request data'})
+            return res.status(400).json({ message: 'Invalid car-request data'})
         }
         else{
-            res.status(201).json({ message: 'Created car successfully!'})
+            return res.status(201).json({ message: 'Created car successfully!'})
         }
         
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
         }
         
     }
@@ -38,7 +38,7 @@ export const createCar = async (req:Request,res:Response) =>{
     
 }
 
-//Gets all cars
+//Reads all cars
 export const getCars = async (res:Response) =>{
     
     const CarRepository = AppDataSource.getRepository(Car)
@@ -47,15 +47,15 @@ export const getCars = async (res:Response) =>{
         const result = await CarRepository.find()
 
         if(!result){
-            res.status(400).json({ message: 'Invalid request data'})
+            return res.status(400).json({ message: 'No cars found!'})
         }
         else{
-            res.status(201).json({ message: 'Fetched cars successfully!'})
+            return res.status(200).json({result})
         }
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
         }
         
     }
@@ -68,18 +68,41 @@ export const getCar = async (req:Request,res:Response) =>{
     const CarRepository = AppDataSource.getRepository(Car)
 
     try{
-        const result = await CarRepository.findOne({where: {id : parseInt(id,10)}})
+        const result = await CarRepository.findOne({where: {id : parseInt(id,10)}}) //converting the string id to match the component id's type
         if(!result){
-            res.status(400).json({ message: 'Invalid request data'})
+            return res.status(400).json({ message: 'Invalid car-request data'})
         }
         else{
-            res.status(201).json({ message: 'Fetched car successfully!'})
+            return res.status(200).json( result )
         }
         
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
+        }
+        
+    }
+}
+
+//Reads all of the components by the same foreign key(car)
+export const getCarComponents = async (req:Request,res:Response) =>{
+
+    const {id} = req.params
+
+    const ComponentRespository = AppDataSource.getRepository(Component)
+    
+    try{
+        const result = await ComponentRespository.find({where: { id : parseInt(id,10)}}) //converting the string id to match the component id's type
+        if(!result){
+            return res.status(404).json({message: "No Components of car found!"})
+        }else{
+            return res.status(200).json({result})
+        }
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            return res.status(500).json(err.message)
         }
         
     }
@@ -98,18 +121,18 @@ export const updateCar = async (req:Request,res:Response) =>{
     car.CarModel = CarModel
     car.Mileage = Mileage
     try{
-        const result = await CarRepository.update(parseInt(id,10),car )
+        const result = await CarRepository.update(parseInt(id,10),car ) //converting the string id to match the component id's type
         
         if (!result) {
             return res.status(404).json({ message: 'Car not found' });
           }
         else{
-        res.status(201).json({ message : "Updated information successfully!" })
+            return res.status(200).json({ message : "Updated car information successfully!" })
         }
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
         }
         
     }
@@ -125,13 +148,13 @@ export const deleteCar = async (req:Request, res:Response) =>{
             return res.status(404).json({ message: 'Car not found' });
             }
         else{
-            res.status(200).json({message: "Car deleted!"});
+            return res.status(200).json({message: "Car deleted!"});
         }
        
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
         }
         
     }
