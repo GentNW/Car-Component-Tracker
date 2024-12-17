@@ -6,8 +6,8 @@ export class Component{
     @PrimaryGeneratedColumn()
     id!: number
 
-    @ManyToOne(() => Car, car => car.id)
-    CarID!: Car
+    @ManyToOne(() => Car, car => car.Components, {onDelete:"CASCADE"})
+    Car!: Car
     
     @Column({type: "varchar", length:255})
     ComponentName!: string
