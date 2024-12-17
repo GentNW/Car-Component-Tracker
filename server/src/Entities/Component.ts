@@ -7,7 +7,7 @@ export class Component{
     id!: number
 
     @ManyToOne(() => Car, car => car.id)
-    CarID!: Car[]
+    CarID!: Car
     
     @Column({type: "varchar", length:255})
     ComponentName!: string
