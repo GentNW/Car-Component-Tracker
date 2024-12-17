@@ -1,58 +1,116 @@
 import { Request, Response } from 'express';
-import pool from '../db'
+import { AppDataSource } from '../data-source';
+import { Component } from '../Entities/Component';
+import { Car } from '../Entities/Car';
 
 //Create
 export const createComponent = async (req:Request,res:Response) =>{
-    const { CarID,ComponentName,ChangeDate, MileageOnChange} = req.body
+    const {CarID,ComponentName,ChangeDate, MileageOnChange} = req.body
+
+   
+    //Fetching the Component's Car to attach it upon creation
+    const CarRepository = AppDataSource.getRepository(Car)
+
+    const car = await CarRepository.findOne(CarID);
+
+    if(!car){
+        return res.status(404).json({message:"Car not found"})
+    }
+    
+    //Creating the component
+    const ComponentRespository = AppDataSource.getRepository(Component)
+
+    const component = new Component
+
+    component.Car = car
+    component.ChangeDate = ChangeDate
+    component.ComponentName = ComponentName
+    component.MileageOnChange = MileageOnChange
+
 
     try{
-        const result = await pool.query(
-            'INSERT INTO Component (CarID,ComponentName,ChangeDate,MileageOnChange) VALUES ($1,$2,$3,$4) RETURNING *',
-            [CarID,ComponentName,ChangeDate,MileageOnChange]
-        )
-        res.status(201).json(result.rows[0])
+        const result = await ComponentRespository.save(component)
+        if(!result){
+           return res.status(400).json({message: "Invalid Component-request data"})
+        }else{
+           return res.status(201).json({message: "Component created successfully!"})// Created
+        }
+        
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+           return res.status(500).json(err.message) //In case of server error
         }
         
     }
 }
 
-//Read
-export const getComponents = async (req:Request,res:Response) =>{
+//Reads all components generally
+export const getComponents = async (res:Response) =>{
+
+    const ComponentRespository = AppDataSource.getRepository(Component)
+    
     try{
-        const result = await pool.query(
-            'SELECT * FROM Component'
-        )
-        res.status(200).json(result.rows)
+        const result = await ComponentRespository.find()
+        if(!result){
+            return res.status(404).json({message: "No Components found!"})
+        }else{
+            return res.status(200).json({result})
+        }
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
         }
         
     }
 }
-//Update
+
+//Reads by id
+export const getComponentByID = async (req:Request,res:Response) =>{
+
+    const {id} = req.params
+
+    const ComponentRespository = AppDataSource.getRepository(Component)
+    
+    try{
+        const result = await ComponentRespository.findOne({where: {id : parseInt(id,10)}}) //converting the string id to match the component id's type
+        if(!result){
+            return res.status(404).json({message: "Component not found!"})
+        }else{
+            return res.status(200).json(result)
+        }
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            return res.status(500).json(err.message)
+        }
+        
+    }
+}
+
+//Updates
 export const updateComponent = async (req:Request,res:Response) =>{
-    const {ID} = req.params
     const { ComponentName,ChangeDate,MileageOnChange} = req.body
 
+    const ComponentRespository = AppDataSource.getRepository(Component)
+
+    const component = new Component
+    component.ChangeDate = ChangeDate
+    component.ComponentName = ComponentName
+    component.MileageOnChange = MileageOnChange
     try{
-        const result = await pool.query(
-            'UPDATE Component ComponentName=$1 ChangeDate=$2 MileageOnChange=$3 WHERE ID=$4 RETURNING *',
-            [ComponentName,ChangeDate,MileageOnChange,ID]
-        )
-        if (result.rows.length === 0) {
+        const result = ComponentRespository.save(component)
+        if (!result) {
             return res.status(404).json({ message: 'Component not found' });
-          }
-        res.status(201).json(result.rows[0])
+        }else{
+            return res.status(200).json({message: "Component updated successfully!"})
+        }
+        
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
         }
         
     }
@@ -60,20 +118,22 @@ export const updateComponent = async (req:Request,res:Response) =>{
 
 //Delete
 export const deleteComponent = async (req:Request, res:Response) =>{
-    const {ID} = req.params
+    const {id} = req.params
     
+    const ComponentRespository = AppDataSource.getRepository(Component)
+
     try{
-        const result = await pool.query('DELETE FROM Component WHERE ID = $1 RETURNING *',
-            [ID]
-        )
-        if (result.rows.length === 0) {
+        const result = await ComponentRespository.findOne({where: {id: parseInt(id,10)}}) //converting the string id to match the component id's type
+        if (result) {
             return res.status(404).json({ message: 'Component not found' });
-            }
-        res.status(200).json(result.rows[0]);
+        }else{
+            return res.status(200).json({message: 'Component deleted successfully!'});
+        }
+        
     } catch(err:unknown){
         if(err instanceof Error)
         {
-            res.status(500).json(err.message)
+            return res.status(500).json(err.message)
         }
         
     }
