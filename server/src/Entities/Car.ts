@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm'
 import { User } from './User'
+import { Component } from './Component'
 @Entity()
 export class Car{
     @PrimaryGeneratedColumn()
@@ -7,6 +8,9 @@ export class Car{
 
     @ManyToOne(() => User, user => user.CarUserID)
     OwnerID!: User[]
+
+    @OneToMany(() => Component, component => component.Car, {cascade: true})
+    Components: Component[]
 
     @Column({type: "varchar", length:255})
     CarModel!: string
