@@ -11,6 +11,9 @@ export class Car{
     @Column({type: "varchar", length:255})
     CarModel!: string
 
+    @Column({type: "varchar", length:255})
+    CarBrand!: string
+
     @Column('int')
     Mileage!: number
 }
