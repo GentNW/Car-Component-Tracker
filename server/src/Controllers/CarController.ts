@@ -1,16 +1,32 @@
+import { AppDataSource } from '../data-source';
+import { Car } from '../Entities/Car';
 import { Request, Response } from 'express';
 import pool from '../db'
+import { where } from 'sequelize';
+
 
 //Create
 export const createCar = async (req:Request,res:Response) =>{
     const { OwnerID,CarModel, Mileage,CarBrand} = req.body
 
+    const CarRepository = AppDataSource.getRepository(Car)
+    
+    const car = new Car()
+    
+    car.CarModel = CarModel
+    car.Mileage = Mileage
+    car.OwnerID = OwnerID
+    car.CarBrand = CarBrand
+
     try{
-        const result = await pool.query(
-            'INSERT INTO Car (OwnerID,CarModel,Mileage,CarBrand) VALUES ($1,$2,$3,$4) RETURNING *',
-            [OwnerID,CarModel,Mileage,CarBrand]
-        )
-        res.status(201).json(result.rows[0])
+        const result = await CarRepository.save(car)
+        if(!result){
+            res.status(400).json({ message: 'Invalid request data'})
+        }
+        else{
+            res.status(201).json({ message: 'Created car successfully!'})
+        }
+        
     } catch(err:unknown){
         if(err instanceof Error)
         {
@@ -18,77 +34,100 @@ export const createCar = async (req:Request,res:Response) =>{
         }
         
     }
+
+    
 }
 
-//Read
-export const getCars = async (req:Request,res:Response) =>{
-    try{
-        const result = await pool.query(
-            'SELECT * FROM Car'
-        )
-        res.status(200).json(result.rows)
-    } catch(err:unknown){
-        if(err instanceof Error)
-        {
-            res.status(500).json(err.message)
-        }
-        
-    }
-}
-
-//Read
-export const getCar = async (req:Request,res:Response) =>{
-    const {ID}=req.params
-    try{
-        const result = await pool.query(
-            'SELECT * where ID=$1 FROM Car',
-            [ID]
-        )
-        res.status(200).json(result.rows)
-    } catch(err:unknown){
-        if(err instanceof Error)
-        {
-            res.status(500).json(err.message)
-        }
-        
-    }
-}
-
-//Update
-export const updateCar = async (req:Request,res:Response) =>{
-    const {ID} = req.params
-    const { CarModel, Mileage,CarBrand} = req.body
-
-    try{
-        const result = await pool.query(
-            'UPDATE Component CarModel=$1 Mileage=$2 CarBrand=$3 WHERE ID=$4 RETURNING *',
-            [CarModel, Mileage,CarBrand,ID]
-        )
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'Component not found' });
-          }
-        res.status(201).json(result.rows[0])
-    } catch(err:unknown){
-        if(err instanceof Error)
-        {
-            res.status(500).json(err.message)
-        }
-        
-    }
-}
-
-//Delete
-export const deleteCar = async (req:Request, res:Response) =>{
-    const {ID} = req.params
+//Gets all cars
+export const getCars = async (res:Response) =>{
+    
+    const CarRepository = AppDataSource.getRepository(Car)
     
     try{
-        const result = await pool.query('DELETE FROM Car WHERE ID = $1 RETURNING *',
-            [ID]
-        )
-        if (result.rows.length === 0) {
+        const result = await CarRepository.find()
+
+        if(!result){
+            res.status(400).json({ message: 'Invalid request data'})
+        }
+        else{
+            res.status(201).json({ message: 'Fetched cars successfully!'})
+        }
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
+    }
+}
+
+//Reads by ID
+export const getCar = async (req:Request,res:Response) =>{
+    const {id}=req.params
+
+    const CarRepository = AppDataSource.getRepository(Car)
+
+    try{
+        const result = await CarRepository.findOne({where: {id : parseInt(id,10)}})
+        if(!result){
+            res.status(400).json({ message: 'Invalid request data'})
+        }
+        else{
+            res.status(201).json({ message: 'Fetched car successfully!'})
+        }
+        
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
+    }
+}
+
+//Updates
+export const updateCar = async (req:Request,res:Response) =>{
+    const {id} = req.params
+    const { CarModel, Mileage,CarBrand} = req.body
+
+    const CarRepository = AppDataSource.getRepository(Car)
+    
+    const car = new Car()
+
+    car.CarBrand = CarBrand
+    car.CarModel = CarModel
+    car.Mileage = Mileage
+    try{
+        const result = await CarRepository.update(parseInt(id,10),car )
+        
+        if (!result) {
+            return res.status(404).json({ message: 'Car not found' });
+          }
+        else{
+        res.status(201).json({ message : "Updated information successfully!" })
+        }
+    } catch(err:unknown){
+        if(err instanceof Error)
+        {
+            res.status(500).json(err.message)
+        }
+        
+    }
+}
+
+//Deletes(by ID)
+export const deleteCar = async (req:Request, res:Response) =>{
+    const {id} = req.params
+    const CarRepository = AppDataSource.getRepository(Car)
+    try{
+        const result = await CarRepository.delete(id)
+        if (!result) {
             return res.status(404).json({ message: 'Car not found' });
             }
-        res.status(200).json(result.rows[0]);
+        else{
+            res.status(200).json({message: "Car deleted!"});
+        }
+       
     } catch(err:unknown){
         if(err instanceof Error)
         {
