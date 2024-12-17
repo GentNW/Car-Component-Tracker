@@ -4,9 +4,9 @@ import { Car } from './Car'
 @Entity()
 export class Component{
     @PrimaryGeneratedColumn()
-    ID!: number
+    id!: number
 
-    @ManyToOne(() => Car, car => car.ID)
+    @ManyToOne(() => Car, car => car.id)
     CarID!: Car[]
     
     @Column({type: "varchar", length:255})

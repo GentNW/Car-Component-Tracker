@@ -3,7 +3,7 @@ import { User } from './User'
 @Entity()
 export class Car{
     @PrimaryGeneratedColumn()
-    ID!: number
+    id!: number
 
     @ManyToOne(() => User, user => user.CarUserID)
     OwnerID!: User[]
