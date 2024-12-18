@@ -92,8 +92,18 @@ export const getCarComponents = async (req:Request,res:Response) =>{
 
     const ComponentRespository = AppDataSource.getRepository(Component)
     
+    const CarRepository = AppDataSource.getRepository(Car)
+
     try{
-        const result = await ComponentRespository.find({where: { id : parseInt(id,10)}}) //converting the string id to match the component id's type
+
+        let mycar = await CarRepository.findOne({where: {id: parseInt(id,10)}})
+    
+        //Makes sure the mycar variable is not null
+        if(!mycar){
+            return res.status(404).json({ message: "Car not found"})
+        }
+
+        const result = await ComponentRespository.find({where: { Car : mycar}}) //converting the string id to match the component id's type
         if(!result){
             return res.status(404).json({message: "No Components of car found!"})
         }else{
