@@ -6,8 +6,8 @@ export class Car{
     @PrimaryGeneratedColumn()
     id!: number
 
-    @ManyToOne(() => User, user => user.CarUserID)
-    OwnerID!: User[]
+    @ManyToOne(() => User, user => user.cars,{onDelete:"CASCADE"})
+    Owner!: User
 
     @OneToMany(() => Component, component => component.Car, {cascade: true})
     Components: Component[]
