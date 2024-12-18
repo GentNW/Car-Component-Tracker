@@ -7,7 +7,7 @@ import { Request, Response } from 'express';
 
 //Create
 export const createCar = async (req:Request,res:Response) =>{
-    const { OwnerID,CarModel, Mileage,CarBrand, Component} = req.body
+    const { Owner,CarModel, Mileage,CarBrand, Component} = req.body
 
     const CarRepository = AppDataSource.getRepository(Car)
     
@@ -15,7 +15,7 @@ export const createCar = async (req:Request,res:Response) =>{
     
     car.CarModel = CarModel
     car.Mileage = Mileage
-    car.OwnerID = OwnerID
+    car.Owner = Owner
     car.CarBrand = CarBrand
     car.Components = Component
     try{
