@@ -1,14 +1,23 @@
 import express from 'express'
+import AuthRoutes from './Routes/AuthRoutes'
 import UserRoutes from './Routes/UserRoutes'
 import ComponentRoutes from './Routes/ComponentRoutes'
 import CarRoutes from './Routes/CarRoutes'
 import ErrorHandler from './Middleware/ErrorHandler'
 import path from 'path'
-
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import { corsOption } from './Config/CorsOptions'
 const app = express();
 
+//Adding express json
 app.use(express.json())
 
+app.use(cookieParser()) //Using cookie parser
+app.use(cors(corsOption)) // Using cors for api access
+
+//Adding routes
+app.use('/api',AuthRoutes)
 app.use('/api',UserRoutes)
 app.use('/api',CarRoutes)
 app.use('/api',ComponentRoutes)
