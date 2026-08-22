@@ -1,5 +1,19 @@
+import { useState, useEffect } from "react"
+//import { useAddNewUsersMutation } from "../Features/Signup/SignupApiSlice"
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+
+const USER_REGEX = /^[A-z_]{3,20}$/
+const PWD_REGEX = /^[A-z0-9!@#$%]{4,12}$/
+
 const Homepage = () => {
-    
+
+    const [errMsg,setErrMsg] = useState('')
+    //const [persist,setPersis] = usePersist()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
     function blur(){
         const content = document.querySelector(".Main-Header")!
         content.classList.toggle("blur")
@@ -57,20 +71,7 @@ const Homepage = () => {
                     </div>
                 </form>
 
-                <form id='Signup-Form' className='Main-Form'>
-                    <img className="Exit-Button" src="https://cdn-icons-png.flaticon.com/512/75/75519.png" alt="exit button" onClick={OnSignupClick}></img>    
-                    <div className='Main-Container'>
-                        
-                        <label className="InputLabel">Username</label>
-                        <input type="text" id="username" name="username"/>
-                        <br/>
-                        <label className="InputLabel">Password</label>
-                        <input type="password" id="password" name="password"/>
-                        <br/>
-                        
-                        <input type="submit" value="Sign up"/>
-                    </div>
-                </form>
+                
                 
             </main>
             {/*<footer>

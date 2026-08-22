@@ -14,7 +14,7 @@ const DashFooter = () =>{
                             <a className = "Dash-footer-link" href="/aboutus">about us</a>
                             <a className = "Dash-footer-link" href="/support">contact</a>
                     </div>    
-                    <p>This web app is not affiliated with or endorsed by any car manufacturer mentioned.</p>
+                    {/*<p>This web app is not affiliated with or endorsed by any car manufacturer mentioned.</p>*/}
                 </div>
                 
             </footer>
