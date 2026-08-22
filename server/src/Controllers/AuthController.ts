@@ -32,7 +32,7 @@ const login =  asyncHandler(async(req: Request,res:Response) => {
     user.refreshTokens.push(token)
     await userRepository.save(user)
     // Sending access token and refresh token 
-    res.json({ accessToken })
+    //res.json({ accessToken })
     res.status(200).json({ accessToken, refreshToken });
 })
 
@@ -43,7 +43,7 @@ const refresh = asyncHandler(async (req: Request, res: Response) => {
   const refreshToken = req.cookies.jwt;
 
   if (!refreshToken) {
-    res.status(403).json({ message: 'Refresh Token Required' });
+    return res.status(403).json({ message: 'Refresh Token Required' });
   }
 
   try {
@@ -60,9 +60,9 @@ const refresh = asyncHandler(async (req: Request, res: Response) => {
       { expiresIn: '15m' }
     );
 
-    res.json({ accessToken: newAccessToken });
+    return res.json({ accessToken: newAccessToken });
   } catch (err) {
-    res.status(403).json({ message: 'Invalid Refresh Token' });
+    return res.status(403).json({ message: 'Invalid Refresh Token' });
   }
 });
 
