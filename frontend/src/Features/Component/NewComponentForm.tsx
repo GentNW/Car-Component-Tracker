@@ -2,7 +2,6 @@ import $ from 'jquery';
 import 'select2';
 import { useEffect } from 'react';
 const NewComponentForm = () =>{
-    let listopen: boolean = false;
     useEffect(() => {
         // Initialize Select2 with custom templates
         $('#Comptype').select2({
@@ -12,15 +11,9 @@ const NewComponentForm = () =>{
           templateSelection: formatState, 
         });
     
-        
-
-        
-        
-        
         // Cleanup on component unmount
         return () => {
             $('#Comptype').css('display', 'none')
-            //$('#Comptype').select2('destroy')
         };
       }, []);
       
