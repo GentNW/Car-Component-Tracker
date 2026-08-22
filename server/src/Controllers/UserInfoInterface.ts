@@ -3,4 +3,5 @@ export interface UserInfo {
     UserName: string
     Password: string
     CarsOwned: number
+    isLoggedin: boolean
 }
