@@ -13,3 +13,4 @@ router.route('/logout')
     .post(AuthController.logout)
 
 module.exports = router
+export default router;
