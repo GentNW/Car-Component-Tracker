@@ -1,15 +1,15 @@
-// import {AllowedOrigin} from './AllowOrigins'
+import {AllowedOrigin} from './AllowOrigins'
 
-// const corsOptions =  {
-//     origin: (origin, callback) =>{
-//         if(AllowedOrigin.indexOf(origin) !== -1 || !origin)
-//         {
-//             callback(null, true)
-//         }else{
-//             callback(new Error('Not Allowed by CORS'))
-//         }
-//     },
-//     credentials: true,
-//     optionSuccessStatus: 200
-// }
-// export const corsOption = corsOptions 
+const corsOptions =  {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void ) =>{
+        if(AllowedOrigin.indexOf(origin as string) !== -1 || !origin)
+        {
+            callback(null, true)
+        }else{
+            callback(new Error('Not Allowed by CORS'))
+        }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200
+}
+export const corsOption = corsOptions 
