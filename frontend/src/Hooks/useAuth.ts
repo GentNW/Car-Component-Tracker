@@ -1,29 +1,30 @@
-// import { useSelector } from 'react-redux'
-// import {selectCurrentToken} from '../Features/Auth/AuthSlice'
-// import {jwtDecode} from 'jwt-decode'
-// import {CustomJwtPayload} from '../../../server/src/Middleware/CustomJwtPayloadInterface';
+import { useSelector } from 'react-redux'
+import {selectCurrentToken} from '../Features/Auth/AuthSlice'
+import {jwtDecode} from 'jwt-decode'
+import {CustomJwtPayload} from './CustomJwtPayloadInterface';
  
 
-// const useAuth = () => {
-//     const token = useSelector(selectCurrentToken)
-//     let isUser = false
-//     let isAdmin = false
-//     let status = "User"
+const useAuth = () => {
+    const token = useSelector(selectCurrentToken)
+    // let isUser = false
+    // let isAdmin = false
+    // let status = "User"
     
-//     if(token){
-//         const decoded = jwtDecode<CustomJwtPayload>(token)
-//         const {id,username, roles } = decoded.UserInfo
+    if(token){
+        const decoded = jwtDecode<CustomJwtPayload>(token)
 
-//         isUser = roles.includes("User")
-//         isAdmin = roles.includes("Admin")
+        const {CarUserID,UserName,CarsOwned} = decoded.UserInfo
 
-//         if(isUser) status = "User"
-//         if(isAdmin) status = "Admin"
+        // isUser = roles.includes("User")
+        // isAdmin = roles.includes("Admin")
+
+        // if(isUser) status = "User"
+        // if(isAdmin) status = "Admin"
 
 
-//         return {id,username,roles,status,isUser, isAdmin}
-//     }
+        return {CarUserID,UserName,CarsOwned,isLoggedIn: true}
+    }
 
-//     return {username:'',roles: [],isUser,isAdmin,status }
-// }
-// export default useAuth
+    return {CarUserID: null ,UserName: '',CarsOwned: 0 ,isLoggedIn: false}
+}
+export default useAuth
