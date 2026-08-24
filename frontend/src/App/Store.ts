@@ -4,7 +4,8 @@ import { apiSlicenoauth } from "./api/ApiSliceNoAuth"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import authReducer from '../Features/Auth/AuthSlice'
 import {carsApiReducer} from '../Features/Car/CarApiSlice'
-//import componentsreducer from from '../Features/Component/ComponentApiSlice'
+//import {componentsreducer} from '../Features/Component/ComponentApiSlice'
+import { RegisterApiReducer } from "../Features/Signup/SignupApiSlice"
 //reducers for each table in the database
 export type RootState = {
     [apiSlice.reducerPath]: ReturnType<typeof apiSlice.reducer>
@@ -12,6 +13,7 @@ export type RootState = {
     auth: ReturnType<typeof authReducer>
     cars: ReturnType<typeof carsApiReducer>
     //components: ReturnType<typeof componentsreducer>
+    users: ReturnType<typeof RegisterApiReducer>
 };
 //Adding reducer paths
 //apiSlicenoauth is for the apislice that does not need authentiction to send an api request i.e(register)
@@ -22,11 +24,13 @@ export const Store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
     cars:carsApiReducer,
+    users: RegisterApiReducer
     //components: componentsApiReducer
   },
   middleware: getDefaultMiddleware => 
     getDefaultMiddleware()
-    .concat(apiSlice.middleware),
+    .concat(apiSlice.middleware)
+    .concat(apiSlicenoauth.middleware),
     
     devTools: false
 })
