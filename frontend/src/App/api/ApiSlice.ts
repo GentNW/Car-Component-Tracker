@@ -2,7 +2,7 @@ import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/too
 import { setCredentials } from '../../Features/Auth/AuthSlice'
 import { RootState } from '../Store'
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3500',
+    baseUrl: 'http://localhost:5000',
     credentials: 'include',
     prepareHeaders: (headers, {getState} ) => {
         //Obtaining the auth token if successful
