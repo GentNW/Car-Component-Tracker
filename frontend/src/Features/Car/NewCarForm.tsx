@@ -20,7 +20,7 @@ const NewCarForm = () =>{
     //const [validUsername, setValidUsername] = useState(false)
     const [CarModel, setCarModel] = useState('')
     //const [validPassword, setValidPassword] = useState(false)
-    const [Mileage, setMileage] = useState("")
+    const [Mileage, setMileage] = useState(0)
 
     const content = (
     <>
@@ -92,7 +92,7 @@ const NewCarForm = () =>{
                     id="Mileage" 
                     name="Mileage" 
                     value={Mileage}
-                    onChange={(e) => setMileage(e.target.value)}
+                    onChange={(e) => setMileage(Number(e.target.value))}
                 />
                 <br/>
                 <input type="submit" value="Submit"/>
