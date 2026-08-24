@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-//import { useAddNewUsersMutation } from "../Features/Signup/SignupApiSlice"
+import SignUpForm from "../Features/Signup/SignUpForm"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 
@@ -64,13 +64,13 @@ const Homepage = () => {
                         <input type="text" id="username" name="username"/>
                         <br/>
                         <label className="InputLabel">Password</label>
-                        <input type="password" id="username" name="username"/>
+                        <input type="password" id="password" name="password"/>
                         <br/>
                         
                         <input type="submit" value="Login"/>
                     </div>
                 </form>
-
+                <SignUpForm />
                 
                 
             </main>
