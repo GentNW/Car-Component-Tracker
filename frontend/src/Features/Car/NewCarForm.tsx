@@ -10,10 +10,9 @@ const NewCarForm = () =>{
         isError,
         error
         }] = useAddNewCarsMutation()
-         /*= async(e)*/
-        const onNewCarSubmit = () => { 
-            console.log("Cars should be added here")
-            //await AddNewCars({})
+        const onNewCarSubmit = async(e: { preventDefault: () => void; }) => { 
+            e.preventDefault()
+            await AddNewCars({CarBrand,CarModel,Mileage})
         }
         
     //Table columns
@@ -21,16 +20,16 @@ const NewCarForm = () =>{
     //const [validUsername, setValidUsername] = useState(false)
     const [CarModel, setCarModel] = useState('')
     //const [validPassword, setValidPassword] = useState(false)
-    const [Mileage, setMileage] = useState([""])
+    const [Mileage, setMileage] = useState("")
 
     const content = (
     <>
         
-        <form className='CompForm'>
+        <form className='CompForm' onSubmit={onNewCarSubmit} >
             <div className='CompContainer'>
 
                 <label className='InputLabel'>Car Brand</label>
-                <select name="Comptype" id="Comptype" className='Comptype'>
+                <select name="Comptype" id="Comptype" className='Comptype' value={CarBrand} onChange={(e) => setCarBrand(e.target.value)}>
                     
                     <optgroup label="Asia" className="Optgroup">    
                         <option value="Toyota">Toyota</option>
@@ -78,13 +77,25 @@ const NewCarForm = () =>{
                 </select>
 
                 <label className="InputLabel">Car Model</label>
-                <input type="text" id="CarModel" name="CarModel"/>
+                <input 
+                    type="text" 
+                    id="CarModel" 
+                    name="CarModel" 
+                    value={CarModel}
+                    onChange={(e) => setCarModel(e.target.value)}
+                />
                 <br/>
                 
                 <label className="InputLabel">Mileage</label>
-                <input type="number" id="Mileage" name="Mileage"/>
+                <input 
+                    type="number" 
+                    id="Mileage" 
+                    name="Mileage" 
+                    value={Mileage}
+                    onChange={(e) => setMileage(e.target.value)}
+                />
                 <br/>
-                <input type="submit" value="Submit" onClick={onNewCarSubmit}/>
+                <input type="submit" value="Submit"/>
                 
             </div>
         </form>
