@@ -8,6 +8,20 @@ import path from 'path'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { corsOption } from './Config/CorsOptions'
+import { AppDataSource } from './data-source'
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Database connected')
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`)
+    })
+  })
+  .catch((err) => {
+    console.error('Database connection failed:', err)
+  })
+
+
 const app = express();
 
 //Adding express json
@@ -25,14 +39,6 @@ app.use('/api',ComponentRoutes)
 
 
 const port = process.env.PORT || 5000;
-
-app.get('/', (req, res) => {
-  res.send('Hello, TypeScript with MERN!');
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
 
 //Catching all (error handling mostly)
 app.all('*',(req,res) => {
