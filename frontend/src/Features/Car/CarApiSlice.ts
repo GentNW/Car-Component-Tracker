@@ -29,7 +29,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getCars: builder.query({
             query: () => ({
-                url: '/cars',
+                url: 'api/cars',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError
                 },
@@ -53,7 +53,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
         
         getCar: builder.query({
             query: () => ({
-                url: '/car/:id',
+                url: 'api/car/:id',
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError
                 },
@@ -77,7 +77,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
 
         getCarComponents: builder.query({
             query: (id:number) => ({
-            url: `/car/${id}/components`,
+            url: `api/car/${id}/components`,
             validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError
                 },
@@ -102,7 +102,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
 
         AddNewCars: builder.mutation({
                 query: initialBlogData =>({
-                    url: '/cars',
+                    url: 'api/cars',
                     method:'POST',
                     body: {
                         ...initialBlogData
@@ -115,7 +115,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
 
         UpdateCar: builder.mutation({
             query: initialBlogData =>({
-                url: '/cars',
+                url: 'api/cars',
                 method:'PATCH',
                 body: {
                     ...initialBlogData
@@ -128,7 +128,7 @@ export const carsApiSlice = apiSlice.injectEndpoints({
         
         DeleteCar: builder.mutation({
             query: ({ id }) =>({
-                url: '/cars',
+                url: 'api/cars',
                 method:'DELETE',
                 body: { id }
             }),

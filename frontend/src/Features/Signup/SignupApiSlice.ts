@@ -4,7 +4,7 @@ export const RegisterApiSlice = apiSlicenoauth.injectEndpoints({
     endpoints: builder => ({
         AddNewUsers: builder.mutation({
                 query: initialUserData =>({
-                    url: '/register',
+                    url: 'api/user',
                     method:'POST',
                     body: {
                         ...initialUserData
@@ -19,3 +19,5 @@ export const RegisterApiSlice = apiSlicenoauth.injectEndpoints({
 export const {
     useAddNewUsersMutation
 } = RegisterApiSlice
+
+export const RegisterApiReducer = RegisterApiSlice.reducer
