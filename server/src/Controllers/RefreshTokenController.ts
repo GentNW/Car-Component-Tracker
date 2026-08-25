@@ -1,5 +1,5 @@
 import { AppDataSource } from '../data-source';
-import { RefreshToken } from '../Entities/RefreshToken'; 
+import { refresh_token } from '../Entities/refresh_token'; 
 import { User } from '../Entities/User';
 import jwt  from 'jsonwebtoken';
 import { CustomJwtPayload } from '../Middleware/CustomJwtPayloadInterface';
@@ -7,9 +7,9 @@ import { CustomJwtPayload } from '../Middleware/CustomJwtPayloadInterface';
 
 //Create a refresh token
 export const issueRefreshToken = async (user: User) => {
-  const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
+  const refreshTokenRepository = AppDataSource.getRepository(refresh_token);
 
-  const token = new RefreshToken();
+  const token = new refresh_token();
   
   const REFRESH_TOKEN_EXPIRATION = 24 * 60 * 60;
 
@@ -47,7 +47,7 @@ export const issueRefreshToken = async (user: User) => {
 
 //Find a refresh token by its value
 export const getRefreshTokenByToken = async (token: string) => {
-  const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
+  const refreshTokenRepository = AppDataSource.getRepository(refresh_token);
 
   return await refreshTokenRepository.findOne({
     where: { refresh_token: token },
@@ -60,7 +60,7 @@ export const validateRefreshToken = async (refreshToken: string): Promise<Custom
   try{
     const decoded =jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string) as CustomJwtPayload
 
-    const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
+    const refreshTokenRepository = AppDataSource.getRepository(refresh_token);
     const tokenRecord = await refreshTokenRepository.findOne({
       where: { refresh_token: refreshToken, user: {CarUserID:decoded.UserInfo.CarUserID}},
     })
@@ -78,7 +78,7 @@ export const validateRefreshToken = async (refreshToken: string): Promise<Custom
 
 //Soft Delete a refresh token by its value
 export const revokeRefreshToken = async (token: string) => {
-  const refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
+  const refreshTokenRepository = AppDataSource.getRepository(refresh_token);
   const refreshToken = await refreshTokenRepository.findOne({ where: { refresh_token: token } });
 
   if (refreshToken) {

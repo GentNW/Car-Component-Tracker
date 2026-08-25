@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 const asyncHandler = require('express-async-handler')
 import { Request, Response } from "express";
 import { AppDataSource } from '../data-source';
-import { issueRefreshToken,validateRefreshToken } from './RefreshTokenController';
+import { issueRefreshToken,validateRefreshToken,revokeRefreshToken } from './RefreshTokenController';
 import { User } from '../Entities/User';
 import bcrypt from 'bcrypt'
 
@@ -84,19 +84,24 @@ const refresh = asyncHandler(async (req: Request, res: Response) => {
 // @desc Login
 // @route Post /auth/logout
 //@access Public - clear cookie if it exists
-const logout =  (req:Request,res:Response) => {
+const logout = asyncHandler(async (req:Request,res:Response) => {
     const cookies  = req.cookies
+    const refreshToken = req.cookies.jwt
     if(!cookies?.jwt){
         return res.sendStatus(204) // no content
     }
-
+    
+    await revokeRefreshToken(refreshToken)
     res.clearCookie('jwt',{
         httpOnly:true,
         sameSite:'none',
         secure:true})
+    
+    
+    res.json({message: "Logged out"})
 
-    res.json({message: "Cookie cleared"})
-}
+
+})
 
 module.exports = {
     login,

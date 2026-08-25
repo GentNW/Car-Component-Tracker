@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column,OneToMany } from 'typeorm'
-import { RefreshToken } from './RefreshToken';
+import { refresh_token } from './refresh_token';
 import { Car } from './Car';
 
 @Entity()
@@ -22,6 +22,6 @@ export class User{
     @OneToMany(() => Car, (car) => car.Owner,{cascade: true})
     cars!:Car[]
 
-    @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user)
-    refreshTokens!: RefreshToken[]; 
+    @OneToMany(() => refresh_token, (refreshToken) => refreshToken.user)
+    refreshTokens!: refresh_token[]; 
 }

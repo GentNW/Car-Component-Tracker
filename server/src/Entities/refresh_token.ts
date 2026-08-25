@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, De
 import { User } from './User';
 
 @Entity()
-export class RefreshToken {
+export class refresh_token {
   [x: number]: { CarUserID: number };
   @PrimaryGeneratedColumn()
   id!: number;
