@@ -1,5 +1,6 @@
-const { issueRefreshToken, validateRefreshToken, revokeRefreshToken } = require('../controllers/refreshTokenController');
-
+const { issueRefreshToken, validateRefreshToken, revokeRefreshToken } = require('../controllers/refreshTokenController')
+const express = require('express')
+const router = express.Router()
 // Route to issue a new refresh token
 router.post('/issue', issueRefreshToken);
 
