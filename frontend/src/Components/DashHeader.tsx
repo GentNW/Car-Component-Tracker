@@ -1,10 +1,16 @@
 import { Link, useLocation, useNavigate} from "react-router-dom"
-
+import { useSendLogoutMutation } from "../Features/Auth/AuthApiSlice"
+import { useDispatch } from "react-redux"
+import { logOut } from "../Features/Auth/AuthSlice"
 const DashHeader = () =>{
 
     const { pathname } = useLocation()
     const navigate = useNavigate()
 
+    //Logout
+    const [sendLogout] = useSendLogoutMutation()
+    const dispatch = useDispatch()
+    
     //User menu toggle
     function HideSection(menu:HTMLElement){
         menu.style.display = 'none'
@@ -45,7 +51,16 @@ const DashHeader = () =>{
     const OnNewCompClick = () => navigate('/dash/newcomp')
     const OnNewCarClick = () => navigate('/dash/Addcar')
     const OnSettingsClick = () => navigate('/dash/settings')
-    const OnLogoutClick = () => navigate('/logout')
+    const OnLogoutClick = async () => {
+        try{
+            await sendLogout({}).unwrap
+            dispatch(logOut())
+            navigate('/')
+        }catch(err)
+        {
+            console.error(err)
+        }
+        }
 
     const ButtonContent=(
         <>
