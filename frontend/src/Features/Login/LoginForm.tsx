@@ -1,9 +1,13 @@
 import { useState } from "react"
 import { FormProps } from "react-router-dom";
 import { useLoginMutation } from "../Auth/AuthApiSlice";
-
+import { useNavigate } from "react-router-dom";
+import { setCredentials } from "../Auth/AuthSlice";
+import { useDispatch, UseDispatch } from "react-redux";
 const LoginForm:React.FC<FormProps> = ({ onSubmit }) => {
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [GetUser, {
             isLoading,
             isSuccess,
@@ -11,8 +15,15 @@ const LoginForm:React.FC<FormProps> = ({ onSubmit }) => {
             error
             }] = useLoginMutation()
             const onLoggerSubmit = async(e: { preventDefault: () => void; }) => { 
-                e.preventDefault()
-                await GetUser({UserName,Password})
+                e.preventDefault() 
+                try{
+                    const {accessToken} = await GetUser({UserName,Password}).unwrap()
+                    dispatch(setCredentials({ accessToken }))
+                    navigate('/dash')
+                }
+                catch(err){
+                    console.error(err)
+                }
             }
 
 
