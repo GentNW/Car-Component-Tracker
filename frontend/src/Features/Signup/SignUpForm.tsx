@@ -52,29 +52,29 @@ const SignUpForm:React.FC<FormProps> = ({ onSubmit }) => {
                         
                         <label className="InputLabel">Email</label>
                         <input 
-                        type="email" 
-                        id="email" 
-                        name="email"
-                        value={Email}
-                        onChange={(e) => setEmail(e.target.value)}
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            value={Email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <br/>
                         <label className="InputLabel">Username</label>
                         <input 
-                        type="text" 
-                        id="UserName" 
-                        name="UserName"
-                        value={UserName}
-                        onChange={(e) => setUsername(e.target.value)}
+                            type="text" 
+                            id="UserName" 
+                            name="UserName"
+                            value={UserName}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                         <br/>
                         <label className="InputLabel">Password</label>
                         <input 
-                        type="password" 
-                        id="password" 
-                        name="password"
-                        value={Password}
-                        onChange={(e) => setPassword(e.target.value)}
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            value={Password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <br/>
                         
