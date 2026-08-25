@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import SignUpForm from "../Features/Signup/SignUpForm"
+import LoginForm from "../Features/Login/LoginForm"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 
@@ -56,20 +57,7 @@ const Homepage = () => {
                         </nav>
                 </div>
                 
-                <form id='Login-Form' className='Main-Form'>
-                    <img className="Exit-Button" src="https://cdn-icons-png.flaticon.com/512/75/75519.png" alt="exit button" onClick={OnLoginClick}></img>    
-                    <div className='Main-Container'>
-
-                        <label className="InputLabel">Username</label>
-                        <input type="text" id="username" name="username"/>
-                        <br/>
-                        <label className="InputLabel">Password</label>
-                        <input type="password" id="password" name="password"/>
-                        <br/>
-                        
-                        <input type="submit" value="Login"/>
-                    </div>
-                </form>
+                <LoginForm/>
                 <SignUpForm />
                 
                 
