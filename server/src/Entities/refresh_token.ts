@@ -21,6 +21,8 @@ export class refresh_token {
 
   @DeleteDateColumn()
   deleted_at?: Date;
-  is_deleted?:boolean;
   token: { CarUserID: number; };
+
+  @Column({ default: false })
+  is_deleted!: boolean;
 }
