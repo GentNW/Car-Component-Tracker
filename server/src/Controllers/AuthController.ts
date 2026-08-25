@@ -4,20 +4,36 @@ import { Request, Response } from "express";
 import { AppDataSource } from '../data-source';
 import { issueRefreshToken,validateRefreshToken } from './RefreshTokenController';
 import { User } from '../Entities/User';
-
+import bcrypt from 'bcrypt'
 
 // @desc Login
 // @route Post /auth
 //@access Public
 const login =  asyncHandler(async(req: Request,res:Response) => {
-    //authenticate user
-    const user = req.body as User
-    const userRepository = AppDataSource.getRepository(User)
+    //authenticates user
+    const { UserName, Password} = req.body  
 
-    if(!user.UserName||!user.Password){
+    //Field Check
+    if(!UserName||!Password){
         return res.status(400).json({ message: 'All fields are required' })
     }
-    const { accessToken , refreshToken, REFRESH_TOKEN_EXPIRATION, token } = await issueRefreshToken(user)
+    const userRepository = AppDataSource.getRepository(User)
+    const currUser = await userRepository.findOne({
+      where: {UserName},
+      relations: ['refreshTokens']
+    })
+
+    //Credential Check
+    if (!currUser){
+      return res.status(401).json({message:'Invalid Credentials'})
+    }
+
+    const passComp = await bcrypt.compare(Password, currUser.Password)
+    if (!passComp){
+      return res.status(401).json({message:'Invalid Credentials'})
+    }
+
+    const { accessToken , refreshToken, REFRESH_TOKEN_EXPIRATION, token } = await issueRefreshToken(currUser)
     //Create cookie with refresh token
     res.cookie('jwt',refreshToken,{
         httpOnly: true, //only accessible by web server
@@ -29,11 +45,10 @@ const login =  asyncHandler(async(req: Request,res:Response) => {
 
 
     // saving the refresh token in the database
-    user.refreshTokens.push(token)
-    await userRepository.save(user)
-    // Sending access token and refresh token 
-    //res.json({ accessToken })
-    res.status(200).json({ accessToken, refreshToken });
+    currUser.refreshTokens.push(token)
+    await userRepository.save(currUser)
+    // Sending access token only 
+    res.status(200).json({ accessToken});
 })
 
 // @desc refresh
@@ -47,7 +62,7 @@ const refresh = asyncHandler(async (req: Request, res: Response) => {
   }
 
   try {
-    // Verifying the refresh token using async/await (Promise-based)
+    // Verifying the refresh token using async/await
     const decoded = await validateRefreshToken(refreshToken);
 
     if(!decoded){
